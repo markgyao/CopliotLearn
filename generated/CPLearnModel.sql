@@ -1,9 +1,17 @@
 CREATE TABLE Students (
 	id INT NOT NULL,
-	lname CHAR(50) NOT NULL,
-	fname CHAR(50) NOT NULL,
+	last_name CHAR(50) NOT NULL,
+	first_name CHAR(50) NOT NULL,
 	phone CHAR(20) NOT NULL,
 	email CHAR(50) NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE TABLE Tests (
+	id INT NOT NULL,
+	test_name_id CHAR(50) NOT NULL,
+	test_category_id INT NOT NULL,
+	test_level INT NOT NULL,
+	test_file CHAR(255) NOT NULL,
 	PRIMARY KEY (id)
 );
 CREATE TABLE StudentTestHistory (

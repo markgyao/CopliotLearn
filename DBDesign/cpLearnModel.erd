@@ -1,14 +1,20 @@
-erdiagram test1Model
 
+erdiagram CPLearnModel
 notation=default
 entity Students {
    id: INT key
-	lname: CHAR(50)
-   fname: CHAR(50)
+	last_name: CHAR(50)
+   first_name: CHAR(50)
    phone: CHAR(20)
    email: CHAR(50)
+}
 
-
+entity Tests {
+   id: INT key
+   test_name_id: CHAR(50)
+   test_category_id: INT
+   test_level: INT
+   test_file: CHAR(255) 
 }
 
 entity StudentTestHistory {
@@ -16,7 +22,6 @@ entity StudentTestHistory {
 	testId: INT
    testDate: DATE
    score: DOUBLE
-
 
 }
 
