@@ -1,0 +1,25 @@
+erdiagram test1Model
+
+notation=default
+entity Students {
+   id: INT key
+	lname: CHAR(50)
+   fname: CHAR(50)
+   phone: CHAR(20)
+   email: CHAR(50)
+
+
+}
+
+entity StudentTestHistory {
+   id: INT key
+	testId: INT
+   testDate: DATE
+   score: DOUBLE
+
+
+}
+
+relationship Rel {
+   Students -> StudentTestHistory
+}
