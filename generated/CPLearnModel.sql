@@ -29,6 +29,15 @@ CREATE TABLE student_test_history (
 	PRIMARY KEY (test_id, test_date)
 );
 
+CREATE TABLE test_categories (
+	test_category_id DATE NOT NULL,
+	test_catagory_name CHAR(255)	--test catagory EX shsat sat act ect. 
+	test_subject CHAR(255)			--main subject like EX alg geo ect. 
+	test_subject2 CHAR(255)			-- detailed subects EX poly graphing ect.
+	PRIMARY KEY (test_category_id)
+);
+
+
 /*
 CREATE TABLE Rel (
 	id INT NOT NULL,
