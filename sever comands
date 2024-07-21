@@ -1,0 +1,61 @@
+#sever comands
+
+sudo apt update 
+# Updates Sudo 
+
+sudo apt install ubuntu-desktop  
+# installs the full Ubuntu desktop environment
+
+sudo reboot 
+# reboots sever 
+
+sudo apt-get install webmin
+# installs sever resouce monitoring for admins 
+# (sever ip):10000 EX: 192.168.1.212:10000
+
+sudo apt-get install tightvncserver
+vncserver
+# Configure VNC Server
+
+sudo apt-get install xrdp
+sudo systemctl enable xrdp
+sudo systemctl start xrdp
+# Configure XRDP
+
+# sudo apt install xfce4 xfce4-goodies
+# Set Up a Desktop Environment
+
+# echo "startxfce4" > ~/.xsession
+# Configure XRDP to use Xfce 
+# (sever ip):3389 EX: 192.168.1.212:3389
+
+sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+# Install KVM and Required Packages
+
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+# Ensure libvirtd service is running
+
+sudo virt-manager
+# Launch Virt-Manager
+
+sudo ufw allow 3389/tcp
+# configure firewall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
