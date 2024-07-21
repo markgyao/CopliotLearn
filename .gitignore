@@ -128,3 +128,5 @@
 	*.ini
 	*.info
 	*.temp
+# Ignore .DS_Store files in Git
+.DS_Store
