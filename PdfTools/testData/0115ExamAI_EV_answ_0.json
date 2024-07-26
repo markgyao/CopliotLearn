@@ -1,0 +1,224 @@
+{
+    "1": {
+        "ANS": "2",
+        "PTS": "2",
+        "REF": "011501ai",
+        "NAT": "F.LE.B.5"
+    },
+    "2": {
+        "ANS": "2",
+        "PTS": "2",
+        "REF": "011502ai",
+        "NAT": "N.Q.A.1"
+    },
+    "3": {
+        "ANS": "4",
+        "PTS": "2",
+        "REF": "011503ai",
+        "NAT": "A.REI.B.4"
+    },
+    "4": {
+        "ANS": "1",
+        "PTS": "2",
+        "REF": "011504ai",
+        "NAT": "F.BF.A.1"
+    },
+    "5": {
+        "ANS": "3",
+        "PTS": "2",
+        "REF": "011505ai",
+        "NAT": "F.LE.A.1"
+    },
+    "6": {
+        "ANS": "2",
+        "PTS": "2",
+        "REF": "011506ai",
+        "NAT": "F.IF.B.5"
+    },
+    "7": {
+        "ANS": "1\n7\u22122\n3x<x\u22128\n15<5\n3x\n9<x",
+        "PTS": "2",
+        "REF": "011507ai",
+        "NAT": "A.REI.B.3"
+    },
+    "8": {
+        "ANS": "1\n25,000(0.86)2\u221225,000(0.86)3=18490\u221215901.40=2588.60",
+        "PTS": "2",
+        "REF": "011508ai",
+        "NAT": "F.IF.A.2"
+    },
+    "9": {
+        "ANS": "4\ny+3=6(0)\ny=\u22123",
+        "PTS": "2",
+        "REF": "011509ai",
+        "NAT": "F.IF.B.4"
+    },
+    "10": {
+        "ANS": "2",
+        "PTS": "2",
+        "REF": "011510ai",
+        "NAT": "A.APR.A.1"
+    },
+    "11": {
+        "ANS": "4\nm=11\u22121\n3\u2212(\u22122)=10\n5=2  y=mx+b\n11=2(3)+b\n5=b  y=2x+5\n9=2(2)+5",
+        "PTS": "2",
+        "REF": "011511ai",
+        "NAT": "A.REI.D.10"
+    },
+    "12": {
+        "ANS": "2",
+        "PTS": "2",
+        "REF": "011512ai",
+        "NAT": "F.BF.B.3"
+    },
+    "13": {
+        "ANS": "3",
+        "PTS": "2",
+        "REF": "011513ai",
+        "NAT": "A.CED.A.1"
+    },
+    "14": {
+        "ANS": "4",
+        "PTS": "2",
+        "REF": "011514ai",
+        "NAT": "S.ID.A.2"
+    },
+    "15": {
+        "ANS": "3",
+        "PTS": "2",
+        "REF": "011515ai",
+        "NAT": "F.LE.B.5"
+    },
+    "16": {
+        "ANS": "1",
+        "PTS": "2",
+        "REF": "011516ai",
+        "NAT": "A.CED.A.4"
+    },
+    "17": {
+        "ANS": "4\nx2+6x=7\nx2+6x+9=7+9\n(x+3)2=16",
+        "PTS": "2",
+        "REF": "011517ai",
+        "NAT": "A.REI.B.4"
+    },
+    "18": {
+        "ANS": "3",
+        "PTS": "2",
+        "REF": "011518ai",
+        "NAT": "A.REI.D.11"
+    },
+    "19": {
+        "ANS": "4\n162t=n4t\n(162)t=(n4)t\n((42)2)t=((n2)2)t",
+        "PTS": "2",
+        "REF": "011519ai",
+        "NAT": "A.SSE.B.3"
+    },
+    "20": {
+        "ANS": "3\nf(0+1)=\u22122f(0)+3=\u22122(2)+3=\u22121\nf(1+1)=\u22122f(1)+3=\u22122(\u22121)+3=5",
+        "PTS": "2",
+        "REF": "011520ai",
+        "NAT": "F.IF.A.3"
+    },
+    "21": {
+        "ANS": "1\n0.8(102)\u22120.8(52)\n10\u22125=80\u221220\n5=12",
+        "PTS": "2",
+        "REF": "011521ai",
+        "NAT": "F.IF.B.6"
+    },
+    "22": {
+        "ANS": "3",
+        "PTS": "2",
+        "REF": "011522ai",
+        "NAT": "A.SSE.A.2"
+    },
+    "23": {
+        "ANS": "4",
+        "PTS": "2",
+        "REF": "011523ai",
+        "NAT": "F.BF.A.1"
+    },
+    "24": {
+        "ANS": "1",
+        "PTS": "2",
+        "REF": "011524ai",
+        "NAT": "A.APR.B.3"
+    },
+    "25": {
+        "ANS": "Correct.  The sum of a rational and irrational is irrational.",
+        "PTS": "2",
+        "REF": "011525ai",
+        "NAT": "N.RN.B.3"
+    },
+    "26": {
+        "ANS": "33+12\n180=25%",
+        "PTS": "2",
+        "REF": "011526ai",
+        "NAT": "S.ID.B.5"
+    },
+    "27": {
+        "ANS": "(\u22124,1), because then every element of the domain is not assigned one unique element in the range.",
+        "PTS": "2",
+        "REF": "011527ai",
+        "NAT": "F.IF.A.1"
+    },
+    "28": {
+        "ANS": "\u22122x2+6x+4",
+        "PTS": "2",
+        "REF": "011528ai",
+        "NAT": "A.APR.A.1"
+    },
+    "29": {
+        "ANS": "4x2\u221212x\u22127=0\n(4x2\u221214x)+(2x\u22127)=0\n2x(2x\u22127)+(2x\u22127)=0\n(2x+1)(2x\u22127)=0\nx=\u22121\n2,72",
+        "PTS": "2",
+        "REF": "011529ai",
+        "NAT": "A.REI.B.4"
+    },
+    "30": {
+        "ANS": "",
+        "PTS": "2",
+        "REF": "011530ai",
+        "NAT": "F.IF.C.7"
+    },
+    "31": {
+        "ANS": "15x+36=10x+48\n5x=12\nx=2.4",
+        "PTS": "2",
+        "REF": "011531ai",
+        "NAT": "A.CED.A.1"
+    },
+    "32": {
+        "ANS": "y=0.25(2)x.  I inputted the four integral values from the graph into my graphing calculator and determined the \nexponential regression equation.",
+        "PTS": "2",
+        "REF": "011532ai",
+        "NAT": "F.LE.A.2"
+    },
+    "33": {
+        "ANS": "2p+3d=18.25\n4p+2d=27.50  4p+6d=36.50\n4p+2d=27.50\n4d=9\nd=2.25  4p+2(2.25)=27.50\n4p=23\np=5.75",
+        "PTS": "4",
+        "REF": "011533ai",
+        "NAT": "A.CED.A.3"
+    },
+    "34": {
+        "ANS": "y\u22652x\u22123.  \n   Oscar is wrong.  (2)+2(1)<4 is not true.",
+        "PTS": "4",
+        "REF": "011534ai",
+        "NAT": "A.REI.D.12"
+    },
+    "35": {
+        "ANS": "r\u22480.94.  The correlation coefficient suggests that as calories increase, so does sodium.",
+        "PTS": "4",
+        "REF": "011535ai",
+        "NAT": "S.ID.C.8"
+    },
+    "36": {
+        "ANS": "The vertex represents a maximum since a<0.  f(x)=\u2212x2+8x+9\n=\u2212(x2\u22128x\u22129)\n=\u2212(x2\u22128x+16)+9+16\n=\u2212(x\u22124)2+25",
+        "PTS": "4",
+        "REF": "011536ai",
+        "NAT": "F.IF.C.8"
+    },
+    "37": {
+        "ANS": "(x\u22123)(2x)=1.25x2  Because the original garden is a square, x2 represents the original area, x\u22123 represents the \nside decreased by 3 meters, 2x represents the doubled side, and 1.25x2 represents the new garden with an area \n25% larger.  (x\u22123)(2x)=1.25x2\n2x2\u22126x=1.25x2\n.75x2\u22126x=0\nx2\u22128x=0\nx(x\u22128)=0\nx=8  1.25(8)2=80",
+        "PTS": "6",
+        "REF": "011537ai",
+        "NAT": "A.CED.A.1"
+    }
+}

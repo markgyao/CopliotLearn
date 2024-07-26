@@ -1,0 +1,218 @@
+{
+    "1": {
+        "ANS": "$$ 2 $$",
+        "PTS": "2",
+        "REF": "011501ai",
+        "NAT": "F.LE.B.5"
+    },
+    "2": {
+        "ANS": "$$ 2 $$",
+        "PTS": "2",
+        "REF": "011502ai",
+        "NAT": "N.Q.A.1"
+    },
+    "3": {
+        "ANS": "$$ 4 $$",
+        "PTS": "2",
+        "REF": "011503ai",
+        "NAT": "A.REI.B.4"
+    },
+    "4": {
+        "ANS": "$$ 1 $$",
+        "PTS": "2",
+        "REF": "011504ai",
+        "NAT": "F.BF.A.1"
+    },
+    "5": {
+        "ANS": "$$ 3 $$",
+        "PTS": "2",
+        "REF": "011505ai",
+        "NAT": "F.LE.A.1"
+    },
+    "6": {
+        "ANS": "$$ 2 $$",
+        "PTS": "2",
+        "REF": "011506ai",
+        "NAT": "F.IF.B.5"
+    },
+    "7": {
+        "ANS": "$$ 1 7−2 3x<x−8 15<5 3x 9<x $$",
+        "PTS": "2",
+        "REF": "011507ai",
+        "NAT": "A.REI.B.3"
+    },
+    "8": {
+        "ANS": "$$ 1 25,000(0.86)2−25,000(0.86)3=18490−15901.40=2588.60 $$",
+        "PTS": "2",
+        "REF": "011508ai",
+        "NAT": "F.IF.A.2"
+    },
+    "9": {
+        "ANS": "$$ 4 y+3=6(0) y=−3 $$",
+        "PTS": "2",
+        "REF": "011509ai",
+        "NAT": "F.IF.B.4"
+    },
+    "10": {
+        "ANS": "$$ 2 $$",
+        "PTS": "2",
+        "REF": "011510ai",
+        "NAT": "A.APR.A.1"
+    },
+    "11": {
+        "ANS": "$$ 4 m=11−1 3−(−2)=10 5=2 y=mx+b 11=2(3)+b 5=b y=2x+5 9=2(2)+5 $$",
+        "PTS": "2",
+        "REF": "011511ai",
+        "NAT": "A.REI.D.10"
+    },
+    "12": {
+        "ANS": "$$ 2 $$",
+        "PTS": "2",
+        "REF": "011512ai",
+        "NAT": "F.BF.B.3"
+    },
+    "13": {
+        "ANS": "$$ 3 $$",
+        "PTS": "2",
+        "REF": "011513ai",
+        "NAT": "A.CED.A.1"
+    },
+    "14": {
+        "ANS": "$$ 4 $$",
+        "PTS": "2",
+        "REF": "011514ai",
+        "NAT": "S.ID.A.2"
+    },
+    "15": {
+        "ANS": "$$ 3 $$",
+        "PTS": "2",
+        "REF": "011515ai",
+        "NAT": "F.LE.B.5"
+    },
+    "16": {
+        "ANS": "$$ 1 $$",
+        "PTS": "2",
+        "REF": "011516ai",
+        "NAT": "A.CED.A.4"
+    },
+    "17": {
+        "ANS": "$$ 4 x2+6x=7 x2+6x+9=7+9 (x+3)2=16 $$",
+        "PTS": "2",
+        "REF": "011517ai",
+        "NAT": "A.REI.B.4"
+    },
+    "18": {
+        "ANS": "$$ 3 $$",
+        "PTS": "2",
+        "REF": "011518ai",
+        "NAT": "A.REI.D.11"
+    },
+    "19": {
+        "ANS": "$$ 4 162t=n4t (162)t=(n4)t ((42)2)t=((n2)2)t $$",
+        "PTS": "2",
+        "REF": "011519ai",
+        "NAT": "A.SSE.B.3"
+    },
+    "20": {
+        "ANS": "$$ 3 f(0+1)=−2f(0)+3=−2(2)+3=−1 f(1+1)=−2f(1)+3=−2(−1)+3=5 $$",
+        "PTS": "2",
+        "REF": "011520ai",
+        "NAT": "F.IF.A.3"
+    },
+    "21": {
+        "ANS": "$$ 1 0.8(102)−0.8(52) 10−5=80−20 5=12 $$",
+        "PTS": "2",
+        "REF": "011521ai",
+        "NAT": "F.IF.B.6"
+    },
+    "22": {
+        "ANS": "$$ 3 $$",
+        "PTS": "2",
+        "REF": "011522ai",
+        "NAT": "A.SSE.A.2"
+    },
+    "23": {
+        "ANS": "$$ 4 $$",
+        "PTS": "2",
+        "REF": "011523ai",
+        "NAT": "F.BF.A.1"
+    },
+    "24": {
+        "ANS": "$$ 1 $$",
+        "PTS": "2",
+        "REF": "011524ai",
+        "NAT": "A.APR.B.3"
+    },
+    "25": {
+        "ANS": "Correct. The sum of a rational and irrational is irrational.",
+        "PTS": "2",
+        "REF": "011525ai",
+        "NAT": "N.RN.B.3"
+    },
+    "26": {
+        "ANS": "$$ 33+12 180=25% $$",
+        "PTS": "2",
+        "REF": "011526ai",
+        "NAT": "S.ID.B.5"
+    },
+    "27": {
+        "ANS": "$$ (−4,1), because then every element of the domain is not assigned one unique element in the range. $$",
+        "PTS": "2",
+        "REF": "011527ai",
+        "NAT": "F.IF.A.1"
+    },
+    "28": {
+        "ANS": "$$ −2x2+6x+4 $$",
+        "PTS": "2",
+        "REF": "011528ai",
+        "NAT": "A.APR.A.1"
+    },
+    "29": {
+        "ANS": "$$ 4x2−12x−7=0 (4x2−14x)+(2x−7)=0 2x(2x−7)+(2x−7)=0 (2x+1)(2x−7)=0 x=−1 2,72 $$",
+        "PTS": "2",
+        "REF": "011529ai",
+        "NAT": "A.REI.B.4"
+    },
+    "30": {
+        "ANS": "$$ PTS: 2 REF: 011530ai NAT: F.IF.C.7 TOP: Graphing Piecewise-Defined Functions ID: A 4 31 ANS: 15x+36=10x+48 5x=12 x=2.4 $$",
+        "PTS": "2",
+        "REF": "011531ai",
+        "NAT": "A.CED.A.1"
+    },
+    "32": {
+        "ANS": "$$ y=0.25(2)x. I inputted the four integral values from the graph into my graphing calculator and determined the exponential regression equation. $$",
+        "PTS": "2",
+        "REF": "011532ai",
+        "NAT": "F.LE.A.2"
+    },
+    "33": {
+        "ANS": "$$ 2p+3d=18.25 4p+2d=27.50 4p+6d=36.50 4p+2d=27.50 4d=9 d=2.25 4p+2(2.25)=27.50 4p=23 p=5.75 $$",
+        "PTS": "4",
+        "REF": "011533ai",
+        "NAT": "A.CED.A.3"
+    },
+    "34": {
+        "ANS": "$$ y≥2x−3. Oscar is wrong. (2)+2(1)<4 is not true. $$",
+        "PTS": "4",
+        "REF": "011534ai",
+        "NAT": "A.REI.D.12"
+    },
+    "35": {
+        "ANS": "$$ r≈0.94. The correlation coefficient suggests that as calories increase, so does sodium. $$",
+        "PTS": "4",
+        "REF": "011535ai",
+        "NAT": "S.ID.C.8"
+    },
+    "36": {
+        "ANS": "$$ The vertex represents a maximum since a<0. f(x)=−x2+8x+9 =−(x2−8x−9) =−(x2−8x+16)+9+16 =−(x−4)2+25 $$",
+        "PTS": "4",
+        "REF": "011536ai",
+        "NAT": "F.IF.C.8"
+    },
+    "37": {
+        "ANS": "$$ (x−3)(2x)=1.25x2 Because the original garden is a square, x2 represents the original area, x−3 represents the side decreased by 3 meters, 2x represents the doubled side, and 1.25x2 represents the new garden with an area 25% larger. (x−3)(2x)=1.25x2 2x2−6x=1.25x2 .75x2−6x=0 x2−8x=0 x(x−8)=0 x=8 1.25(8)2=80 $$",
+        "PTS": "6",
+        "REF": "011537ai",
+        "NAT": "A.CED.A.1"
+    }
+}
