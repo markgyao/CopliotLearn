@@ -1,41 +1,23 @@
--- Drop child tables first (if they exist)
-DROP TABLE IF EXISTS student_homeworks;
-DROP TABLE IF EXISTS student_tests;
-DROP TABLE IF EXISTS test_details;
-DROP TABLE IF EXISTS students_tests;
+
 DROP TABLE IF EXISTS students_homeworks;
-DROP TABLE IF EXISTS teachers_classes;
+DROP TABLE IF EXISTS students_tests;
 DROP TABLE IF EXISTS homeworks;
 DROP TABLE IF EXISTS classes;
 DROP TABLE IF EXISTS tests;
-DROP TABLE IF EXISTS test_categories;
 DROP TABLE IF EXISTS gallery;
 DROP TABLE IF EXISTS role_permissions;
-DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS test_categories;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS teachers;
 
 -- Create 'roles' table to define roles
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
     role_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
-);
-
--- Create 'users' table
-CREATE TABLE users (
-    id INT NOT NULL AUTO_INCREMENT,
-    last_name VARCHAR(50) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role_id INT NOT NULL,
-    created_at DATE, 
-    updated_at DATE, 
-    is_active BOOLEAN,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
 -- Create 'permissions' table to define actions on resources
@@ -46,6 +28,22 @@ CREATE TABLE permissions (
     resource VARCHAR(255) NOT NULL,  -- e.g., 'user', 'report', 'dashboard'
     action VARCHAR(50) NOT NULL,     -- e.g., 'create', 'read', 'update', 'delete'
     PRIMARY KEY (id)
+);
+
+-- Create 'users' table
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT,
+    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL, -- updated field for clarity
+    role_id INT NOT NULL,
+    created_at DATE, 
+    updated_at DATE, 
+    is_active BOOLEAN,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
 -- Create 'role_permissions' table to link roles and permissions
@@ -78,14 +76,6 @@ CREATE TABLE tests (
     CONSTRAINT fk_test_category FOREIGN KEY (category_id) REFERENCES test_categories(id) ON DELETE CASCADE
 );
 
--- Create 'students' table
-CREATE TABLE students (
-    student_id INT NOT NULL AUTO_INCREMENT,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (student_id)
-);
-
 -- Create 'teachers' table
 CREATE TABLE teachers (
     teacher_id INT NOT NULL AUTO_INCREMENT,
@@ -94,18 +84,21 @@ CREATE TABLE teachers (
     PRIMARY KEY (teacher_id)
 );
 
--- Create 'classes' table 
+-- Create 'classes' table
 CREATE TABLE classes (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
-    teacher_id INT NOT NULL,
+    teacher_id INT,
     starting_date DATE NOT NULL,
     ending_date DATE NOT NULL,
     descriptions TEXT,
     subject VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT fk_teacher_class FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id) ON DELETE CASCADE
+    CONSTRAINT fk_teacher_class FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id) ON DELETE SET NULL -- updated from CASCADE to SET NULL
 );
+
+-- Add index for faster lookups on teacher_id
+CREATE INDEX idx_classes_teacher_id ON classes (teacher_id);
 
 -- Create 'homeworks' table to store homework assignments
 CREATE TABLE homeworks (
@@ -121,14 +114,15 @@ CREATE TABLE homeworks (
     CONSTRAINT fk_homeworks_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
 );
 
--- Create 'teachers_classes' table to store which teacher teaches which classes
-CREATE TABLE teachers_classes (
-    id INT NOT NULL AUTO_INCREMENT,
-    teacher_id INT NOT NULL,
-    class_id INT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_teachers_classes_teacher FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id) ON DELETE CASCADE,
-    CONSTRAINT fk_teachers_classes_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+-- Add index for faster lookups on class_id
+CREATE INDEX idx_homeworks_class_id ON homeworks (class_id);
+
+-- Create 'students' table
+CREATE TABLE students (
+    student_id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (student_id)
 );
 
 -- Create 'students_homeworks' table to store students' grades for homework
@@ -137,10 +131,15 @@ CREATE TABLE students_homeworks (
     homework_id INT NOT NULL,
     student_id INT NOT NULL,
     grade DECIMAL(5,2) NOT NULL,
+    submitted_date DATE NOT NULL,  -- added for tracking submission date
     PRIMARY KEY (id),
     CONSTRAINT fk_students_homeworks_student FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE,
     CONSTRAINT fk_students_homeworks_homework FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE
 );
+
+-- Add index for faster lookups on student_id and homework_id
+CREATE INDEX idx_students_homeworks_student_id ON students_homeworks (student_id);
+CREATE INDEX idx_students_homeworks_homework_id ON students_homeworks (homework_id);
 
 -- Create 'students_tests' table to store students' test results
 CREATE TABLE students_tests (
@@ -154,6 +153,10 @@ CREATE TABLE students_tests (
     CONSTRAINT fk_students_tests_test FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE
 );
 
+-- Add index for faster lookups on student_id and test_id
+CREATE INDEX idx_students_tests_student_id ON students_tests (student_id);
+CREATE INDEX idx_students_tests_test_id ON students_tests (test_id);
+
 -- Create 'gallery' table to store images related to students
 CREATE TABLE gallery (
     image_id INT NOT NULL AUTO_INCREMENT,
@@ -161,15 +164,10 @@ CREATE TABLE gallery (
     image_path VARCHAR(255) NOT NULL,
     description TEXT,
     upload_date DATE NOT NULL,
+    image_title VARCHAR(100),  -- optional field for image title or categorization
     PRIMARY KEY (image_id),
     CONSTRAINT fk_gallery_student FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
 );
 
--- Create 'user_permissions' table to link users with permissions
-CREATE TABLE user_permissions (
-    user_id INT NOT NULL,
-    permission_id INT NOT NULL,
-    PRIMARY KEY (user_id, permission_id),
-    CONSTRAINT fk_user_permission FOREIGN KEY (user_id) REFERENCES users(id),
-    CONSTRAINT fk_permission_user FOREIGN KEY (permission_id) REFERENCES permissions(id)
-);
+-- Add index for faster lookups on student_id
+CREATE INDEX idx_gallery_student_id ON gallery (student_id);
