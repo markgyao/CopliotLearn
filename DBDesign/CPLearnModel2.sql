@@ -48,17 +48,16 @@ CREATE TABLE role_permissions (
 -- Create 'users' table
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
+    role_id INT NOT NULL,
     account_id VARCHAR(255) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
-    phone VARCHAR(50),
     email VARCHAR(100) NOT NULL,
+    phone VARCHAR(50),
     wechat_id VARCHAR(50),
-    password_hash VARCHAR(255) NOT NULL, -- updated field for clarity
-    role_id INT NOT NULL,
+    password_hash VARCHAR(255), -- updated field for clarity
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     is_active BOOLEAN,
 
     PRIMARY KEY (id),
