@@ -2,6 +2,8 @@
 DROP TABLE IF EXISTS students_homeworks;
 DROP TABLE IF EXISTS students_tests;
 DROP TABLE IF EXISTS homeworks;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS class_schedules;
 DROP TABLE IF EXISTS classes;
 DROP TABLE IF EXISTS tests;
 DROP TABLE IF EXISTS gallery;
@@ -10,8 +12,8 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS test_categories;
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS teachers;
+
+
 
 -- Create 'roles' table to define roles
 CREATE TABLE roles (
@@ -66,6 +68,20 @@ CREATE TABLE users (
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
+CREATE TABLE students (
+    id INT NOT NULL AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    grade_level VARCHAR(255) NOT NULL,
+    main_parent_id INT NOT NULL,
+    secondary_parent_id INT,
+    addional_info TEXT, -- additional information about the student such as extra emergency contact, siblings
+    food_allergy TEXT,
+    UNIQUE(student_id),
+    PRIMARY KEY (id),
+    CONSTRAINT fk_students_user FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_students_main_parent FOREIGN KEY (main_parent_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_students_secondary_parent FOREIGN KEY (secondary_parent_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
 -- Create 'test_categories' table to define test categories
 CREATE TABLE test_categories (
@@ -105,6 +121,14 @@ CREATE TABLE classes (
     CONSTRAINT fk_teacher_class FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE SET NULL -- updated from CASCADE to SET NULL
 );
 
+CREATE TABLE class_schedules(
+    class_id INT NOT NULL,
+    day_of_week VARCHAR(10) NOT NULL,    -- e.g., Monday, Tuesday, etc.
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    PRIMARY KEY (class_id, day_of_week, start_time, end_time),
+    CONSTRAINT fk_class_schedules_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+);
 
 -- Create 'homeworks' table to store homework assignments
 CREATE TABLE homeworks (
