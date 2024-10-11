@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+SQLAlchemy
+databases
+python-dotenv
+mariadb
+alembic
