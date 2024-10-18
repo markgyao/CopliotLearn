@@ -1,7 +1,33 @@
-fastapi
-uvicorn
-SQLAlchemy
-databases
-python-dotenv
-mariadb
-alembic
+# FastAPI and Uvicorn
+fastapi==0.100.0
+uvicorn==0.22.0  # ASGI server to run FastAPI
+
+# SQLAlchemy and databases
+SQLAlchemy==2.0.20  # SQLAlchemy ORM for database interaction
+databases==0.6.1    # Async support for SQLAlchemy (if needed)
+mysqlclient==2.2.4  # MariaDB/MySQL driver for SQLAlchemy (replace with appropriate version)
+
+# JWT authentication
+python-jose==3.3.0  # For handling JWT tokens
+passlib[bcrypt]==1.7.4  # For password hashing with bcrypt
+
+# Environment variables
+python-dotenv==1.0.0  # For reading .env files
+
+# Alembic for database migrations (optional if using Alembic)
+alembic==1.10.0
+
+# Pydantic for data validation
+pydantic==2.9.1  # Pydantic version 2+ (used in FastAPI for request/response validation)
+pydantic-settings==2.0.3  # For managing application settings
+
+# Jinja2 for HTML templating (if serving HTML from FastAPI)
+jinja2==3.1.2
+
+# Gunicorn (optional, if you want to use Gunicorn as the process manager)
+gunicorn==21.2.0
+
+# Optional - If you're using testing with pytest and coverage
+pytest==7.4.2
+pytest-asyncio==0.21.0  # For testing asynchronous functions
+httpx==0.24.1  # For making HTTP requests in tests
