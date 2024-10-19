@@ -86,9 +86,9 @@ CREATE TABLE students (
 -- Create 'test_categories' table to define test categories
 CREATE TABLE test_categories (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,          -- test category EX: SHSAT, SAT, ACT, etc.
-    subject VARCHAR(255) NOT NULL,       -- main subject like EX: Algebra, Geometry, etc.
-    level VARCHAR(255),         -- grade levels
+    name VARCHAR(255) NOT NULL,          -- test category Example: shsat, sat, regets, ap, grades, etc.
+    subject VARCHAR(255) NOT NULL,       -- main subject like Example: algebra i, algebra ii, geometry, physics, chemistry etc.
+    level VARCHAR(255),                 -- grade_1, grade_2, kindergarten, etc. specify which grade levels
     PRIMARY KEY (id)
 );
 
