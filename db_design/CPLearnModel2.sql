@@ -1,17 +1,17 @@
 
-DROP TABLE IF EXISTS students_homeworks;
-DROP TABLE IF EXISTS students_tests;
-DROP TABLE IF EXISTS homeworks;
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS class_schedules;
-DROP TABLE IF EXISTS classes;
-DROP TABLE IF EXISTS tests;
-DROP TABLE IF EXISTS gallery;
-DROP TABLE IF EXISTS role_permissions;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS permissions;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS test_categories;
+-- DROP TABLE IF EXISTS students_homeworks;
+-- DROP TABLE IF EXISTS students_tests;
+-- DROP TABLE IF EXISTS homeworks;
+-- DROP TABLE IF EXISTS students;
+-- DROP TABLE IF EXISTS class_schedules;
+-- DROP TABLE IF EXISTS classes;
+-- DROP TABLE IF EXISTS tests;
+-- DROP TABLE IF EXISTS gallery;
+-- DROP TABLE IF EXISTS role_permissions;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS permissions;
+-- DROP TABLE IF EXISTS roles;
+-- DROP TABLE IF EXISTS test_categories;
 
 
 
