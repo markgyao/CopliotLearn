@@ -1,0 +1,53 @@
+# File: .github/workflows/test_deploy.yml
+
+name: Test Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'feature-branch-name'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.inputs.branch }}
+
+    - name: Prepare Remote Directory
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
+        script: |
+          sudo rm -rf /opt/cplearn/test/app
+          sudo mkdir -p /opt/cplearn/test/app
+          sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app
+
+    - name: Copy app/ to Test Server
+      uses: appleboy/scp-action@v0.1.1
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
+        source: 'app/*'
+        target: '/opt/cplearn/test/app/'
+
+    - name: Reload Uvicorn Service
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
+        script: |
+          sudo systemctl restart uvicorn.service
