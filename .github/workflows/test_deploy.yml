@@ -1,5 +1,3 @@
-
-
 name: Test Deploy
 
 on:
@@ -32,13 +30,18 @@ jobs:
           sudo mkdir -p /opt/cplearn/test/app
           sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app
 
+    - name: Write SSH key to file
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.TEST_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
     - name: Copy app/ to Test Server
-      uses: appleboy/scp-action@v0.1.1
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.TEST_SERVER_HOST }}
         username: ${{ secrets.TEST_SERVER_USER }}
-        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
-        key_is_b64: false
+        key_path: ~/.ssh/id_rsa
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         source: 'app/*'
         target: '/opt/cplearn/test/app/'
@@ -49,7 +52,6 @@ jobs:
         host: ${{ secrets.TEST_SERVER_HOST }}
         username: ${{ secrets.TEST_SERVER_USER }}
         key: ${{ secrets.TEST_SERVER_SSH_KEY }}
-        key_is_b64: false
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         script: |
           sudo systemctl restart cplearn-test.service
