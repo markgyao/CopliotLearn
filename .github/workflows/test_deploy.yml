@@ -38,6 +38,7 @@ jobs:
         host: ${{ secrets.TEST_SERVER_HOST }}
         username: ${{ secrets.TEST_SERVER_USER }}
         key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        key_base64: false
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         source: 'app/*'
         target: '/opt/cplearn/test/app/'
