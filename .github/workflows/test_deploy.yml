@@ -38,7 +38,7 @@ jobs:
         host: ${{ secrets.TEST_SERVER_HOST }}
         username: ${{ secrets.TEST_SERVER_USER }}
         key: ${{ secrets.TEST_SERVER_SSH_KEY }}
-        key_base64: false
+        key_is_b64: false
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         source: 'app/*'
         target: '/opt/cplearn/test/app/'
@@ -49,6 +49,7 @@ jobs:
         host: ${{ secrets.TEST_SERVER_HOST }}
         username: ${{ secrets.TEST_SERVER_USER }}
         key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        key_is_b64: false
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         script: |
           sudo systemctl restart cplearn-test.service
