@@ -1,0 +1,52 @@
+name: Test Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'feature-branch-name'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.inputs.branch }}
+
+    - name: Prepare Remote Directory
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
+        script: |
+          sudo rm -rf /opt/cplearn/test/app
+          sudo mkdir -p /opt/cplearn/test/app
+          sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app
+
+    - name: Set up SSH Agent
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+
+    - name: Copy app/ to Test Server using SCP
+      run: |
+        scp -o StrictHostKeyChecking=no -P ${{ secrets.TEST_SERVER_SSH_PORT }} -r app/* ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }}:/opt/cplearn/test/app/
+      env:
+        SSH_AUTH_SOCK: ${{ secrets.SSH_AUTH_SOCK }}
+
+    - name: Reload Uvicorn Service
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.TEST_SERVER_HOST }}
+        username: ${{ secrets.TEST_SERVER_USER }}
+        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
+        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
+        script: |
+          sudo systemctl restart cplearn-test.service
