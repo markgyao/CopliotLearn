@@ -1,4 +1,4 @@
-# File: .github/workflows/test_deploy.yml
+
 
 name: Test Deploy
 
@@ -50,4 +50,4 @@ jobs:
         key: ${{ secrets.TEST_SERVER_SSH_KEY }}
         port: ${{ secrets.TEST_SERVER_SSH_PORT }}
         script: |
-          sudo systemctl restart uvicorn.service
+          sudo systemctl restart cplearn-test.service
