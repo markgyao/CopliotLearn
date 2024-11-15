@@ -8,10 +8,11 @@ from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.config import settings
 from app.schemas.user import User
+from app.config import settings
 
 router = APIRouter()
 
-SECRET_KEY = "6aa48ea5c4ff67e2fd7cdcdef7cdd4554d80fa3b84110b10d23113eb1e85acb2"
+SECRET_KEY =DATABASE_URL = settings.secret_key #"6aa48ea5c4ff67e2fd7cdcdef7cdd4554d80fa3b84110b10d23113eb1e85acb2"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -56,14 +57,14 @@ def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
 )
-try:
-    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-    account_id: str = payload.get("sub")
-    if account_id is None:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        account_id: str = payload.get("sub")
+        if account_id is None:
+            raise credentials_exception
+        user = get_user_by_account_id(db, account_id=account_id)
+        if user is None:
+            raise credentials_exception
+    except JWTError:
         raise credentials_exception
-    user = get_user_by_account_id(db, account_id=account_id)
-    if user is None:
-        raise credentials_exception
-except JWTError:
-    raise credentials_exception
-return user
+    return user
