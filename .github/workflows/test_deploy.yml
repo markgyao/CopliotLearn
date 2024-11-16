@@ -1,4 +1,4 @@
-name: Test Deploy
+name: Deploy To Test Server
 
 on:
   workflow_dispatch:
@@ -13,47 +13,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.inputs.branch }}
+      # 1. Checkout the specified branch
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
-    - name: Prepare Remote Directory
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.TEST_SERVER_HOST }}
-        username: ${{ secrets.TEST_SERVER_USER }}
-        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
-        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
-        script: |
-          sudo rm -rf /opt/cplearn/test/app
-          sudo mkdir -p /opt/cplearn/test/app
-          sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app
+      # 2. Set up SSH agent and add the SSH key
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.TEST_SERVER_SSH_KEY }}
 
-    - name: Write SSH key to file
-      run: |
-        echo "${{ secrets.TEST_SERVER_SSH_KEY }}" > $GITHUB_WORKSPACE/id_rsa
-        chmod 600 $GITHUB_WORKSPACE/id_rsa
+      # 3. Verify SSH agent setup
+      - name: Verify SSH agent setup
+        run: |
+          echo "SSH_AUTH_SOCK: $SSH_AUTH_SOCK"
+          echo "SSH_AGENT_PID: $SSH_AGENT_PID"
+          ssh-add -L
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} 'echo SSH connection successful'
 
-    - name: Verify SSH key file
-      run: ls -l $GITHUB_WORKSPACE/id_rsa
+      # 4. Prepare Remote Directory
+      - name: Prepare Remote Directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "sudo rm -rf /opt/cplearn/test/app && sudo mkdir -p /opt/cplearn/test/app && sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app"
 
-    - name: Copy app/ to Test Server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.TEST_SERVER_HOST }}
-        username: ${{ secrets.TEST_SERVER_USER }}
-        key_path: './id_rsa'
-        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
-        source: 'app/*'
-        target: '/opt/cplearn/test/app/'
+      # 5. List contents of app/ directory (Local)
+      - name: List local app/ directory
+        run: ls -la app/
 
-    - name: Reload Uvicorn Service
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.TEST_SERVER_HOST }}
-        username: ${{ secrets.TEST_SERVER_USER }}
-        key: ${{ secrets.TEST_SERVER_SSH_KEY }}
-        port: ${{ secrets.TEST_SERVER_SSH_PORT }}
-        script: |
-          sudo systemctl restart cplearn-test.service
+      # 6. Copy app/ to Test Server using SCP
+      - name: Copy app/ to Test Server using SCP
+        run: |
+          scp -o StrictHostKeyChecking=no -P ${{ secrets.TEST_SERVER_SSH_PORT }} -r app/* ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }}:/opt/cplearn/test/app/
+
+      # 7. Verify Remote Directory Contents
+      - name: Verify Remote Directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "ls -la /opt/cplearn/test/app/"
+
+      # 8. Create .env File on Remote Server
+      - name: Create .env File on Remote Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} << 'EOF'
+          echo "DATABASE_URL=${{ secrets.TEST_DBCONNECTION_URL }}" | sudo tee /opt/cplearn/test/app/.env > /dev/null
+          echo "SECRET_KEY=${{ secrets.TEST_SECRET_KEY }}" | sudo tee -a /opt/cplearn/test/app/.env > /dev/null
+          EOF
+
+      # 8.1. Set Permissions for .env File
+      - name: Set Permissions for .env File
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "sudo chmod 600 /opt/cplearn/test/app/.env"
+
+      # 9. Reload Uvicorn Service
+      - name: Reload Uvicorn Service
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "sudo systemctl restart cplearn-test.service"
