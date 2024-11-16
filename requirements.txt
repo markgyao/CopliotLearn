@@ -3,7 +3,7 @@ fastapi==0.103.1
 uvicorn==0.23.2  # ASGI server to run FastAPI
 
 # SQLAlchemy and databases
-SQLAlchemy==2.0.20  # SQLAlchemy ORM for database interaction
+SQLAlchemy==2.0.21  # SQLAlchemy ORM for database interaction
 databases==0.6.2    # Async support for SQLAlchemy (if needed)
 mysqlclient==2.2.5  # MariaDB/MySQL driver for SQLAlchemy (replace with appropriate version)
 
