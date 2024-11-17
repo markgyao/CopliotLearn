@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+    <h3 id="roleDisplay" style="display: none;">Access Token: <span id="accessToken"></span></h3>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (event) => {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            // Get the input values from the form
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Prepare form data in x-www-form-urlencoded format
+            const formData = new URLSearchParams();
+            formData.append("username", username);
+            formData.append("password", password);
+
+            try {
+                // Send a POST request to the FastAPI token endpoint
+                const response = await fetch("http://localhost:8000/token", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded", // Required format
+                    },
+                    body: formData.toString(),
+                });
+
+                // Handle the response
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("accessToken").textContent = data.access_token;
+                    document.getElementById("roleDisplay").style.display = "block"; // Show the token
+                    alert("Login successful!");
+                } else {
+                    alert("Invalid login credentials");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
