@@ -14,6 +14,3 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# Print settings to verify everything is working
-print(f"Database URL from settings: {settings.database_url}")
-print(f"Secret Key from settings: {settings.secret_key}")

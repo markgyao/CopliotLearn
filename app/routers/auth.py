@@ -12,8 +12,7 @@ from app.config import settings
 
 router = APIRouter()
 
-SECRET_KEY =DATABASE_URL = settings.secret_key #"6aa48ea5c4ff67e2fd7cdcdef7cdd4554d80fa3b84110b10d23113eb1e85acb2"
-ALGORITHM = "HS256"
+SECRET_KEY =DATABASE_URL = settings.secret_key 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
