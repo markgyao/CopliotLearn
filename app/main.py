@@ -16,6 +16,10 @@ print(f"DATABASE_URL: {DATABASE_URL}")  # Should not be None
 # Initialize FastAPI app
 app = FastAPI()
 
+@app.get('/')
+def lol():
+    return {"wrong one ": "go to docs already"}
+
 # Add CORS middleware here
 app.add_middleware(
     CORSMiddleware,
