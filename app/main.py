@@ -10,6 +10,9 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+print(f"SECRET_KEY: {SECRET_KEY}")  # Should not be None
+print(f"DATABASE_URL: {DATABASE_URL}")  # Should not be None
+
 # Initialize FastAPI app
 app = FastAPI()
 

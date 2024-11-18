@@ -4,7 +4,7 @@ from app.db import get_db
 from app.crud.user import get_user_by_account_id
 from app.utils.security import verify_password
 from datetime import datetime, timedelta
-import jwt
+from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.config import settings
 from app.schemas.user import User

@@ -1,8 +1,10 @@
-
+import os
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
-# Automatically load .env from the current working directory (no need for os)
-load_dotenv()
+
+# Load .env file manually (explicitly)
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
 
 class Settings(BaseSettings):
     database_url: str
