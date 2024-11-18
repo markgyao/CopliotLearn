@@ -1,4 +1,3 @@
-
 -- DROP TABLE IF EXISTS students_homeworks;
 -- DROP TABLE IF EXISTS students_tests;
 -- DROP TABLE IF EXISTS homeworks;
