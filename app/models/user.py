@@ -19,3 +19,4 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     role = relationship("Role")
+
