@@ -2,18 +2,18 @@ from pydantic import BaseModel
 from typing import Optional
 
 class StudentBase(BaseModel):
+    student_id: int
     grade_level: str
-    addional_info: Optional[str]
-    food_allergy: Optional[str]
+    main_parent_id: int
+    secondary_parent_id: Optional[int] = None
+    addional_info: Optional[str] = None
+    food_allergy: Optional[str] = None
 
 class StudentCreate(StudentBase):
-    student_id: int
-    main_parent_id: int
-    secondary_parent_id: Optional[int]
+    pass
 
 class Student(StudentBase):
     id: int
-    student_id: int
 
     class Config:
-        from_attributes = True
+        orm_mode = True

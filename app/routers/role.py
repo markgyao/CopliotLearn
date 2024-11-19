@@ -6,15 +6,13 @@ from app.db import get_db
 
 router = APIRouter()
 
-#  get all roles
-@router.get("/roles", response_model=list[schema_role.Role])
-def get_all_roles(db: Session = Depends(get_db)):
-    roles = crud_role.get_all_roles(db)
-    return roles
-
 @router.post("/roles/", response_model=schema_role.Role)
 def create_role(role: schema_role.RoleCreate, db: Session = Depends(get_db)):
     return crud_role.create_role(db, role)
+
+@router.get("/roles", response_model=list[schema_role.Role])
+def get_all_roles(db: Session = Depends(get_db)):
+    return crud_role.get_all_roles(db)
 
 @router.get("/roles/{role_id}", response_model=schema_role.Role)
 def get_role(role_id: int, db: Session = Depends(get_db)):

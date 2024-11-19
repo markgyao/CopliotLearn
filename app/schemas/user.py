@@ -1,5 +1,3 @@
-# app/schemas/user.py
-
 from pydantic import BaseModel
 from typing import Optional
 
@@ -10,15 +8,15 @@ class UserBase(BaseModel):
     email: Optional[str] = None
     phone: Optional[str] = None
     wechat_id: Optional[str] = None
-    is_active: int = 0
+    is_active: bool = False
 
 class UserCreate(UserBase):
-    password: str  # Changed from 'password_hash' to 'password'
-    role_id: int   # Include role_id during user creation
+    password: str
+    role_id: int
 
 class User(UserBase):
     id: int
     role_id: int
 
     class Config:
-        from_attributes = True
+        orm_mode = True

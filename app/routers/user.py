@@ -1,5 +1,3 @@
-
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.crud import user as crud_user
@@ -10,6 +8,7 @@ from app.utils.permissions import has_permission
 
 router = APIRouter()
 
+# Create a new user
 @router.post("/users/", response_model=schema_user.User)
 def create_user(
     user: schema_user.UserCreate, 
@@ -20,6 +19,7 @@ def create_user(
         raise HTTPException(status_code=403, detail="Not enough permissions")
     return crud_user.create_user(db, user)
 
+# Get all users
 @router.get("/users", response_model=list[schema_user.User])
 def get_all_users(
     db: Session = Depends(get_db), 
@@ -30,6 +30,7 @@ def get_all_users(
     users = crud_user.get_all_users(db)
     return users
 
+# Get a specific user by ID
 @router.get("/users/{user_id}", response_model=schema_user.User)
 def get_user(
     user_id: int, 
@@ -44,6 +45,7 @@ def get_user(
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+# Delete a specific user by ID
 @router.delete("/users/{user_id}")
 def delete_user(
     user_id: int, 
