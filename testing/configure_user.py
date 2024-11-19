@@ -1,6 +1,6 @@
 import os
-import mysql.connector
-from mysql.connector import Error
+import mariadb
+from mariadb import Error
 from passlib.context import CryptContext
 from dotenv import load_dotenv
 from urllib.parse import urlparse
@@ -23,13 +23,13 @@ db_config = {
 }
 
 # Initialize password context with bcrypt
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], bcrypt__default_rounds=12)
 
 # Function to update user password and activate user
 def configure_user(account_id, new_password):
     try:
-        # Connect to the MySQL database
-        connection = mysql.connector.connect(
+        # Connect to the MariaDB database
+        connection = mariadb.connect(
             host=db_config['host'],
             user=db_config['user'],
             password=db_config['password'],
@@ -37,7 +37,7 @@ def configure_user(account_id, new_password):
             port=db_config['port']
         )
 
-        if connection.is_connected():
+        if connection:
             cursor = connection.cursor()
 
             # Hash the new password
@@ -59,7 +59,7 @@ def configure_user(account_id, new_password):
     except Error as e:
         print(f"Error: {e}")
     finally:
-        if connection.is_connected():
+        if connection:
             cursor.close()
             connection.close()
 
