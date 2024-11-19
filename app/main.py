@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import role, user, student, auth
+from app.routers import auth, class_schedules, class_routers, class_schedules, gallery, homework, permissions,role_permissions, student_homeworks,student_test,students,test,test_categories,user,role
 from dotenv import load_dotenv
 import os
 
@@ -32,5 +32,18 @@ app.add_middleware(
 # Include your routers
 app.include_router(role.router)
 app.include_router(user.router)
-app.include_router(student.router)
+app.include_router(students.router)
 app.include_router(auth.router)
+app.include_router(class_schedules.router)
+app.include_router(class_routers.router)
+app.include_router(gallery.router)
+app.include_router(homework.router)
+app.include_router(permissions.router)
+app.include_router(role_permissions.router)
+app.include_router(student_homeworks.router)
+app.include_router(student_test.router)
+app.include_router(test.router)
+app.include_router(test_categories.router)
+
+
+#note: hardcoded-credentials Embedding credentials in source code risks unauthorized access

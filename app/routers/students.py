@@ -4,6 +4,7 @@ from app.crud import student as crud_student
 from app.schemas import student as schema_student
 from app.db import get_db
 
+
 router = APIRouter()
 
 # Create a new student

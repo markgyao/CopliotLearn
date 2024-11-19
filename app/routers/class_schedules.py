@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.crud import class_schedule as crud_class_schedule
+from app.crud import class_schedule as class_schedule
 from app.schemas import class_schedule as schema_class_schedule
 from app.db import get_db
 

@@ -16,3 +16,6 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
+# Debugging: Print the loaded settings
+print(f"Database URL: {settings.database_url}")
+print(f"Secret Key: {settings.secret_key}")
