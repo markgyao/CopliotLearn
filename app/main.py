@@ -16,6 +16,10 @@ print(f"DATABASE_URL: {DATABASE_URL}")  # Should not be None
 # Initialize FastAPI app
 app = FastAPI()
 
+# # Initialize FastAPI app with docs disabled
+#uncmment to disable docs
+# app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+
 @app.get('/')
 def lol():
     return {"wrong one ": "go to docs already"}
