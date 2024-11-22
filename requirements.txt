@@ -1,41 +1,33 @@
-# FastAPI and ASGI server
+# FastAPI and Uvicorn
 fastapi==0.103.1
-uvicorn[standard]==0.23.2  # ASGI server with recommended extras
+uvicorn==0.23.2  # ASGI server to run FastAPI
 
-# SQLAlchemy and database interaction
-SQLAlchemy==1.4.41  # Compatible with databases==0.6.2
-databases==0.6.2    # Async support for SQLAlchemy
-mysqlclient==2.2.5  # MariaDB/MySQL driver for SQLAlchemy
+# SQLAlchemy and databases
+SQLAlchemy==2.0.21  # SQLAlchemy ORM for database interaction
+databases==0.6.2    # Async support for SQLAlchemy (if needed)
+mysqlclient==2.2.5  # MariaDB/MySQL driver for SQLAlchemy (replace with appropriate version)
 
-# Authentication and security
+# JWT authentication
 python-jose==3.3.0  # For handling JWT tokens
 passlib[bcrypt]==1.7.4  # For password hashing with bcrypt
 
-# Environment variable management
+# Environment variables
 python-dotenv==1.0.0  # For reading .env files
 
-# Database migrations (if using Alembic)
+# Alembic for database migrations (optional if using Alembic)
 alembic==1.11.1
 
-# Data validation and application settings
+# Pydantic for data validation
 pydantic==2.4.2  # Pydantic version 2+ (used in FastAPI for request/response validation)
 pydantic-settings==2.0.3  # For managing application settings
 
-# HTML templating (if serving HTML from FastAPI)
+# Jinja2 for HTML templating (if serving HTML from FastAPI)
 jinja2==3.1.2
 
-# Process management (optional)
-gunicorn==21.2.0  # For running FastAPI in production
+# Gunicorn (optional, if you want to use Gunicorn as the process manager)
+gunicorn==21.2.0
 
-# Testing and HTTP clients
-pytest==7.4.2  # For unit testing
+# Optional - If you're using testing with pytest and coverage
+pytest==7.4.2
 pytest-asyncio==0.21.0  # For testing asynchronous functions
 httpx==0.24.1  # For making HTTP requests in tests
-
-# Static analysis and linting (optional but recommended)
-flake8==6.1.0  # Linting and code style enforcement
-black==23.9.1  # Code formatter
-isort==5.12.0  # Import sorting
-mypy==1.5.1    # Type checking
-
-python-multipart
