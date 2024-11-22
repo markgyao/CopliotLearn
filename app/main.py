@@ -1,53 +1,35 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth, class_schedules, class_routers, class_schedules, gallery, homework, permissions,role_permissions, student_homeworks,student_test,students,test,test_categories,user,role
-from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from app.routers import auth_router
 import os
-
-# Load environment variables
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-SECRET_KEY = os.getenv("SECRET_KEY")
-
-print(f"SECRET_KEY: {SECRET_KEY}")  # Should not be None
-print(f"DATABASE_URL: {DATABASE_URL}")  # Should not be None
 
 # Initialize FastAPI app
 app = FastAPI()
 
-# # Initialize FastAPI app with docs disabled
-#uncmment to disable docs
-# app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-
-@app.get('/')
-def lol():
-    return {"wrong one ": "go to docs already"}
-
-# Add CORS middleware here
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace "*" with your frontend domain in production
+    allow_origins=["*"],  # Update for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include your routers
-app.include_router(role.router)
-app.include_router(user.router)
-app.include_router(students.router)
-app.include_router(auth.router)
-app.include_router(class_schedules.router)
-app.include_router(class_routers.router)
-app.include_router(gallery.router)
-app.include_router(homework.router)
-app.include_router(permissions.router)
-app.include_router(role_permissions.router)
-app.include_router(student_homeworks.router)
-app.include_router(student_test.router)
-app.include_router(test.router)
-app.include_router(test_categories.router)
+# Mount static files (CSS, JS, images)
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+# Set up templates
+templates_dir = os.path.join(os.path.dirname(__file__), "templates")
+templates = Jinja2Templates(directory=templates_dir)
 
-#note: hardcoded-credentials Embedding credentials in source code risks unauthorized access
+# Include the authentication router
+app.include_router(auth_router.router)
+
+# Home route
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
