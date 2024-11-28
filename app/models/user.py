@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from app.db import Base
 
 class User(Base):
@@ -14,8 +15,8 @@ class User(Base):
     phone = Column(String(50))
     wechat_id = Column(String(50))
     password_hash = Column(String(255))
-    created_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
-    updated_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    created_at = Column(TIMESTAMP, server_default=func.now())
+    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
     is_active = Column(Boolean, default=True)
 
     role = relationship("Role")

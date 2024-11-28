@@ -1,17 +1,25 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from app.models.user import User
 from app.schemas.user import UserCreate
 from app.utils.security import hash_password
+from fastapi import HTTPException
 
 def create_user(db: Session, user: UserCreate):
     hashed_password = hash_password(user.password)
     db_user = User(**user.dict(exclude={'password'}))
     db_user.password_hash = hashed_password
     db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+    try:
+        db.commit()
+        db.refresh(db_user)
+    except IntegrityError as e:
+        db.rollback()
+        if "foreign key constraint fails" in str(e.orig):
+            raise HTTPException(status_code=400, detail="Invalid role_id provided.")
+        raise
     return db_user
-# ... (rest of the file remains the same)
+
 def get_user_by_account_id(db: Session, account_id: str):
     return db.query(User).filter(User.account_id == account_id).first()
 
