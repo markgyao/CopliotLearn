@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routers import role, user, student, auth
+from app.logging_config import setup_logging  # Import the logging setup
 from dotenv import load_dotenv
 import os
 
@@ -7,6 +8,9 @@ load_dotenv()
 
 DATABASE_URL=os.getenv("DATABASE_URL")
 SECRET_KEY=os.getenv("SECRET_KEY")
+
+# Setup logging
+setup_logging()
 
 
 app = FastAPI()

@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP
+# app/models/user.py
+
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP, text
 from sqlalchemy.orm import relationship
 from app.db import Base
 
@@ -14,8 +16,12 @@ class User(Base):
     phone = Column(String(50))
     wechat_id = Column(String(50))
     password_hash = Column(String(255))
-    created_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
-    updated_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    created_at = Column(TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'))
+    updated_at = Column(
+        TIMESTAMP,
+        server_default=text('CURRENT_TIMESTAMP'),
+        onupdate=text('CURRENT_TIMESTAMP')
+    )
     is_active = Column(Boolean, default=True)
 
     role = relationship("Role")
