@@ -1,0 +1,14 @@
+# /etc/systemd/system/cplearn-test.service
+[Unit]
+Description=CPLearn Uvicorn Test Server
+After=network.target
+
+[Service]
+User=cpladmin
+Group=www-data
+WorkingDirectory=/opt/cplearn/test
+ExecStart=/home/cpladmin/.pyenv/versions/cplenv/bin/uvicorn app.main:app --reload --port 8082 --host 0.0.0.0
+Restart=always
+Environment="PATH=/home/cpladmin/.pyenv/versions/cplenv/bin"
+
+[Install]

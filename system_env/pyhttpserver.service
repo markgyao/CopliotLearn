@@ -1,0 +1,15 @@
+# /etc/systemd/system/pyhttpserver.service
+[Unit]
+Description=Python HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=/usr/bin/python3 -m http.server 8080 --directory /opt/cplearn/data
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+[cpladmin@smartclub ~]

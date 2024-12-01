@@ -130,3 +130,6 @@ Thumbs.db
 *.temp
 # Ignore .DS_Store files in Git
 .DS_Store
+
+
+.secrets
