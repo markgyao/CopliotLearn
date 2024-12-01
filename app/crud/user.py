@@ -1,13 +1,19 @@
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user import UserCreate
+from app.utils.security import hash_password
 
 def create_user(db: Session, user: UserCreate):
-    db_user = User(**user.dict())
+    hashed_password = hash_password(user.password)
+    db_user = User(**user.dict(exclude={'password'}))
+    db_user.password_hash = hashed_password
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+# ... (rest of the file remains the same)
+def get_user_by_account_id(db: Session, account_id: str):
+    return db.query(User).filter(User.account_id == account_id).first()
 
 def get_user(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
