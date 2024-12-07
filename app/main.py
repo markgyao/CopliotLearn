@@ -12,8 +12,8 @@ SECRET_KEY=os.getenv("SECRET_KEY")
 # Setup logging
 setup_logging()
 
-
-app = FastAPI()
+app = FastAPI(root_path="/api")
+#app = FastAPI()
 
 app.include_router(role.router)
 app.include_router(user.router)
