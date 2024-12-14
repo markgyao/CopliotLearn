@@ -69,4 +69,4 @@ jobs:
       # 9. Reload Uvicorn Service
       - name: Reload Uvicorn Service
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} "sudo systemctl restart cplearn-prod.service"
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} "sudo systemctl restart cplearn-production.service"
