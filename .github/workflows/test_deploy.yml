@@ -1,4 +1,4 @@
-name: Deploy To Test Server
+name: Deploy To Test Server 2
 
 on:
   workflow_dispatch:
@@ -36,7 +36,11 @@ jobs:
       # 4. Prepare Remote Directory
       - name: Prepare Remote Directory
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "sudo rm -rf /opt/cplearn/test/app && sudo mkdir -p /opt/cplearn/test/app && sudo chown -R ${{ secrets.TEST_SERVER_USER }} /opt/cplearn/test/app"
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} << 'EOF'
+          sudo rm -rf /opt/cplearn/test/app
+          sudo mkdir -p /opt/cplearn/test/app
+          sudo chown -R cpladmin:www-data /opt/cplearn/test/app
+          EOF
 
       # 5. List contents of app/ directory (Local)
       - name: List local app/ directory
@@ -58,12 +62,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} << 'EOF'
           echo "DATABASE_URL=${{ secrets.TEST_DBCONNECTION_URL }}" | sudo tee /opt/cplearn/test/app/.env > /dev/null
           echo "SECRET_KEY=${{ secrets.TEST_SECRET_KEY }}" | sudo tee -a /opt/cplearn/test/app/.env > /dev/null
+          sudo chown cpladmin:www-data /opt/cplearn/test/app/.env
+          sudo chmod 600 /opt/cplearn/test/app/.env
           EOF
-
-      # 8.1. Set Permissions for .env File
-      - name: Set Permissions for .env File
-        run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.TEST_SERVER_SSH_PORT }} ${{ secrets.TEST_SERVER_USER }}@${{ secrets.TEST_SERVER_HOST }} "sudo chmod 600 /opt/cplearn/test/app/.env"
 
       # 9. Reload Uvicorn Service
       - name: Reload Uvicorn Service

@@ -1,0 +1,72 @@
+name: Deploy API To Prod Server 
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'feature-branch-name'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the specified branch
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      # 2. Set up SSH agent and add the SSH key
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.PROD_SERVER_SSH_KEY }}
+
+      # 3. Verify SSH agent setup
+      - name: Verify SSH agent setup
+        run: |
+          echo "SSH_AUTH_SOCK: $SSH_AUTH_SOCK"
+          echo "SSH_AGENT_PID: $SSH_AGENT_PID"
+          ssh-add -L
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} 'echo SSH connection successful'
+
+      # 4. Prepare Remote Directory
+      - name: Prepare Remote Directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} << 'EOF'
+          sudo rm -rf /opt/cplearn/prod/app
+          sudo mkdir -p /opt/cplearn/prod/app
+          sudo chown -R cpladmin:www-data /opt/cplearn/prod/app
+          EOF
+
+      # 5. List contents of app/ directory (Local)
+      - name: List local app/ directory
+        run: ls -la app/
+
+      # 6. Copy app/ to Test Server using SCP
+      - name: Copy app/ to Test Server using SCP
+        run: |
+          scp -o StrictHostKeyChecking=no -P ${{ secrets.PROD_SERVER_SSH_PORT }} -r app/* ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }}:/opt/cplearn/prod/app/
+
+      # 7. Verify Remote Directory Contents
+      - name: Verify Remote Directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} "ls -la /opt/cplearn/prod/app/"
+
+      # 8. Create .env File on Remote Server
+      - name: Create .env File on Remote Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} << 'EOF'
+          echo "DATABASE_URL=${{ secrets.PROD_DBCONNECTION_URL }}" | sudo tee /opt/cplearn/prod/app/.env > /dev/null
+          echo "SECRET_KEY=${{ secrets.PROD_SECRET_KEY }}" | sudo tee -a /opt/cplearn/prod/app/.env > /dev/null
+          sudo chown cpladmin:www-data /opt/cplearn/prod/app/.env
+          sudo chmod 600 /opt/cplearn/prod/app/.env
+          EOF
+
+      # 9. Reload Uvicorn Service
+      - name: Reload Uvicorn Service
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PROD_SERVER_SSH_PORT }} ${{ secrets.PROD_SERVER_USER }}@${{ secrets.PROD_SERVER_HOST }} "sudo systemctl restart cplearn-prod.service"
